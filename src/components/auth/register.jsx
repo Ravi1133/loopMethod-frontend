@@ -116,11 +116,11 @@ function Register() {
 
         <div className="d-flex row mt-3">
           <div className="col-md-6">
-            <div>
+            
               <Autocomplete
                 disablePortal
                 options={roleOption}
-                sx={{ width: "100%" }}
+                // sx={{ width: "100%",height:"100%" }}
                 onChange={(e, va) => {
                   setformState((prev) => {
                     return { ...prev, role: va };
@@ -130,7 +130,7 @@ function Register() {
                   <TextField className="w-100" required={true} {...params} label="Role" />
                 )}
               />
-            </div>
+            
           </div>
           <div className="col-md-6">
             <div>
@@ -151,7 +151,7 @@ function Register() {
           </div>
         </div>
 
-        <div className="mt-3">
+        <div className="mt-3 d-flex justify-content-around">
           <Button variant="outlined" onClick={() => navigate("/")}>
             Login
           </Button>

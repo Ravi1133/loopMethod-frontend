@@ -271,7 +271,7 @@ function Index() {
                 <tr className="">
                   <td> VIP</td>
                   <td>{selctedEvent.ticketCount?.VIP?.price}</td>
-                  <td>{selctedEvent.ticketCount?.GENERAL?.size}</td>
+                  <td>{selctedEvent.ticketCount?.VIP?.size}</td>
                 </tr>
                 <tr>
                   <td> VVIP</td>

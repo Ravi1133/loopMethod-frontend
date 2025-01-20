@@ -1,4 +1,5 @@
-const baseURL="http://localhost:4000"
+// const baseURL="http://localhost:4000"
+const baseURL="https://loopmethod-server.onrender.com"
 
 
 let prefix=`${baseURL}/api/v1`

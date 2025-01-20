@@ -39,6 +39,7 @@ function AddEvent() {
       VVIP: { size: 0, price: 0 },
     },
   });
+  const [error,setError]=useState(false)
 //   new URLSearchParams(window.locatio)
   const [query,setQuery]=useState("")
   let autoCompleteRef =useRef()
@@ -159,7 +160,22 @@ function AddEvent() {
         });
     });
   }, [])
-  
+  const handleDateChange = (event) => {
+    const inputDate = new Date(event.target.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to midnight for comparison
+
+    if (inputDate < today) {
+        setError(true);
+    } else {
+        setformState((prev) => {
+            return { ...prev, date: event.target.value };
+          });
+        setError(false);
+    }
+    
+    // setDate(event.target.value);
+};
   return (
     <div>
         <MenuAppBar/>
@@ -189,6 +205,9 @@ function AddEvent() {
               required={true}
               variant="outlined"
               className="w-100 mx-2"
+              InputLabelProps={{
+                shrink: true,
+            }}
             //   value={query}
               value={formState.location}
             //   onChange={(event) => setQuery(event.target.value)}
@@ -211,16 +230,13 @@ function AddEvent() {
               className="w-100 mx-2"
               min={new Date()}
               value={formState.date}
+              helperText={error ? "Please select a future date" : ""}
               slotProps={{
                 input: {
                   min:  moment().format("YYYY-MM-DD"), // Restrict past dates
                 },
               }}
-              onChange={(e) => {
-                setformState((prev) => {
-                  return { ...prev, date: e.target.value };
-                });
-              }}
+              onChange={handleDateChange}
             />
             <TextField
               id="outlined-basic"
