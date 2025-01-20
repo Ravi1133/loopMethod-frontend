@@ -1,0 +1,13 @@
+.formDiv{
+    width: 500px;
+    /* border: 1px solid blue;   */
+    height: fit-content; 
+    font-size: 25px;
+}
+.css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
+    font-size: 20px !important;
+}
+.css-19qnlrw-MuiFormLabel-root-MuiInputLabel-root{
+    font-size: 20px !important;
+    
+}
