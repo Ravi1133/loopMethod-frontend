@@ -277,6 +277,9 @@ function AddEvent() {
                   className="w-100 mx-2 mt-2"
                   value={formState.ticket.GENERAL.size}
                   onChange={(e) => {
+                    if(e.target.value<0){
+                        return 
+                    }
                     setformState((prev) => {
                       return {
                         ...prev,
@@ -300,6 +303,9 @@ function AddEvent() {
                   className="w-100 mx-2"
                   value={formState.ticket.GENERAL.price}
                   onChange={(e) => {
+                    if(e.target.value<0){
+                        return 
+                    }
                     setformState((prev) => {
                       return {
                         ...prev,
@@ -327,6 +333,9 @@ function AddEvent() {
                   className="w-100 mx-2"
                   value={formState.ticket.VIP.size}
                   onChange={(e) => {
+                    if(e.target.value <0 ){
+                        return
+                    }
                     setformState((prev) => {
                       return {
                         ...prev,
@@ -347,6 +356,9 @@ function AddEvent() {
                   className="w-100 mx-2 mt-2"
                   value={formState.ticket.VIP.price}
                   onChange={(e) => {
+                    if(e.target.value<0){
+                        return 
+                    }
                     setformState((prev) => {
                       return {
                         ...prev,
@@ -370,6 +382,9 @@ function AddEvent() {
                   className="w-100 mx-2"
                   value={formState.ticket.VVIP.size}
                   onChange={(e) => {
+                    if(e.target.value<0){
+                        return 
+                    }
                     setformState((prev) => {
                       return {
                         ...prev,
@@ -390,6 +405,9 @@ function AddEvent() {
                   className="w-100 mx-2 mt-2"
                   value={formState.ticket.VVIP.price}
                   onChange={(e) => {
+                    if(e.target.value<0){
+                        return 
+                    }
                     setformState((prev) => {
                       return {
                         ...prev,

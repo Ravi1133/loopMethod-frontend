@@ -42,9 +42,18 @@ function handleAxiosError(error) {
 
 const USER_STATUS_OBJ={ACTIVE:"ACTIVE",INACTIVE:"INACTIVE",BLOCKED:"BLOCKED"}
 
+function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+      const context = this;
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func.apply(context, args), delay);
+    };
+  }
 export {
     handleAxiosError,
     unAuthorizedAction,
     userInfoData,
-    USER_STATUS_OBJ
+    USER_STATUS_OBJ,
+    debounce
 }

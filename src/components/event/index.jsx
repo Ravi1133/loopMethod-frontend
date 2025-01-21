@@ -24,7 +24,7 @@ import "./style.css";
 import { bookTicket_service } from "../../services/ticket";
 import MenuAppBar from "../common/Appbar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { userInfoData } from "../../utils";
+import { debounce, userInfoData } from "../../utils";
 // import { Button } from "bootstrap";
 let defaultTiocketToBook={
   GENERAL: 0,
@@ -41,6 +41,7 @@ function Index() {
   const [openEventoption, setopenEventoption] = useState(null);
   const [isLoading,setisLoading]=useState(null)
   const [ticketToBook, setticketToBook] = useState(defaultTiocketToBook);
+  const [isBooking,setIsBooking]=useState(null)
   const navigate = useNavigate();
   const getAllEventFunc = async () => {
     setisLoading(true)
@@ -69,6 +70,18 @@ function Index() {
   console.log(events, "events");
 
   let bookTicketFunc = async () => {
+    setIsBooking(true)
+    let ticketCount=0
+    Object.values(ticketToBook).map((item)=>{
+      ticketCount=ticketCount+item
+    })
+    if(!ticketCount){
+      alert("Please give your number")
+      return
+    }
+    if(Object.values(ticketToBook)){
+
+    }
     let payload = {
       eventId: selctedEvent._id,
       category: {
@@ -87,6 +100,7 @@ function Index() {
     } else {
       // alert(result.data.message)
     }
+    setIsBooking(false)
     setopenTicketModel(false)
   };
   
@@ -103,6 +117,7 @@ function Index() {
   };
 
   console.log(ticketToBook,"ticketToBook")
+  
 
   return (
     <div className="">
@@ -240,7 +255,9 @@ function Index() {
       </div>
       <Modal
         open={openTicketModel}
-        onClose={() => setopenTicketModel(false)}
+        onClose={() =>{
+          setticketToBook(defaultTiocketToBook)
+           setopenTicketModel(false)}}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -289,12 +306,17 @@ function Index() {
                       variant="outlined"
                       className="w-75 mx-2"
                       value={ticketToBook.GENERAL}
-                      onChange={(e) =>
+                      onChange={(e) =>{
+                        console.log(e.target.value,"e.target.value")
+                        if(e.target.value <1|| e.target.value> selctedEvent.ticketCount?.GENERAL?.size){
+                          return
+                        }
                         setticketToBook((prev) => {
                           return { ...prev, GENERAL: +e.target.value };
-                        })
+                        })}
                       }
                     />
+                    <div>₹{selctedEvent.ticketCount?.GENERAL.price *ticketToBook.GENERAL}</div>
                   </td>
                   <td>
                     {" "}
@@ -306,12 +328,17 @@ function Index() {
                       variant="outlined"
                       className="w-75 p-0"
                       value={ticketToBook.VIP}
-                      onChange={(e) =>
+                      onChange={(e) =>{
+                        if(e.target.value <0|| e.target.value> selctedEvent.ticketCount?.VIP?.size){
+                          return
+                        }
                         setticketToBook((prev) => {
                           return { ...prev, VIP: +e.target.value };
-                        })
+                        })}
                       }
                     />
+                    <div>₹{selctedEvent.ticketCount?.VIP.price *ticketToBook.VIP}</div>
+
                   </td>
                   <td>
                     {" "}
@@ -323,24 +350,34 @@ function Index() {
                       variant="outlined"
                       className="w-75 "
                       value={ticketToBook.VVIP}
-                      onChange={(e) =>
+                      onChange={(e) =>{
+                        if(e.target.value <0|| e.target.value> selctedEvent.ticketCount?.VVIP?.size){
+                          return
+                        }
                         setticketToBook((prev) => {
                           return { ...prev, VVIP: +e.target.value };
-                        })
+                        })}
                       }
                     />
+                    <div>₹{selctedEvent.ticketCount?.VVIP.price *ticketToBook.VVIP}</div>
+
                   </td>
                 </tr>
+                <tr><td colSpan={4} className="border text-center">Total--{(selctedEvent.ticketCount?.VVIP.price *ticketToBook.VVIP)+(selctedEvent.ticketCount?.VIP.price *ticketToBook.VIP)+(selctedEvent.ticketCount?.GENERAL.price *ticketToBook.GENERAL)}</td></tr>
               </tbody>
             </table>
             <Box className="d-flex justify-content-center mt-4  ">
-              <Button variant="contained" onClick={bookTicketFunc}>
+              <Button variant="contained"  onClick={debounce(()=>{ 
+                bookTicketFunc()
+                },2000)}>
                 Book
               </Button>
               <Button
                 variant="contained"
                 className="ms-3"
-                onClick={() => setopenTicketModel(false)}
+                onClick={() =>{
+                  setticketToBook(defaultTiocketToBook)
+                  setopenTicketModel(false)}}
               >
                 Close
               </Button>
